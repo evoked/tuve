@@ -19,14 +19,6 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors())
 
-/* https://stackoverflow.com/a/38259193 */
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS, POST, PUT");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-  next();
-});
-
 const PORT = process.env.PORT || 3001
 const uri = `mongodb+srv://${process.env.MONGO}@merncluster.eacb3.mongodb.net/audite?retryWrites=true&w=majority`
 const options = { useNewUrlParser: true, useUnifiedTopology: true }
@@ -56,7 +48,24 @@ app.use(
   })
 )
 
-const io = new Server(server)
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    transports: ['websocket', 'polling'],
+    allowedHeaders: ["Access-Control-Allow-Origin"],
+    credentials: true
+  },
+  allowEIO3: true
+})
+
+/* https://stackoverflow.com/a/38259193 */
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS, POST, PUT");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  next();
+});
 
 io.on('connection', (socket) => {
   console.log('hi')
@@ -69,13 +78,12 @@ io.on('connection', (socket) => {
   })
 })
 
-io.on('blah', () => {
-  console.log('nbllaaah')
-})
-
-
 app.get('/api/test', (req,res) => {
-  res.sendFile('./public/connect.html', {'root': '/home/evo/programming/tuve/'})
+  // if(!req.headers.authorization) throw(new Error('no auth'))
+    // let user = res.locals.user
+    // console.log(user)
+    res.sendFile(__dirname + '/public/connect.html')
+  
 })
 
 /* Login/register routing */
