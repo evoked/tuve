@@ -3,7 +3,7 @@ import { joinRoom } from '../../services/rooms.js'
 import * as io from "socket.io-client"
 // import host from '../../services/host'
 
-const socket = io("http://localhost:3001/api/test", {
+const socket = io("http://localhost:3001/", {
   withCredentials: true,
 //   extraHeaders: {
     // "my-custom-header": "abcd"
@@ -17,13 +17,20 @@ const socket = io("http://localhost:3001/api/test", {
 //   }
 
 
-socket.on('connect', () => {
-    console.log(socket.id)
-})
+// socket.on('connect', () => {
+//     console.log(socket.id)
+// })
 
 const JoinRoom = () => {
-    
-    const [content, setContent] = useState('')
+    const [content, setContent] = useState([])
+
+    socket.on('connect', () => {
+        console.log(socket.connected)
+        setContent(content => [...content, 'connected'])
+    })
+    useEffect(() => {
+        console.log(content)
+    }, [content])
     // useEffect(() => {
     //     joinRoom()
     //     .then(res => {
@@ -33,7 +40,7 @@ const JoinRoom = () => {
     // }, [])
     return (
     <div>
-        {/* <div>{content}</div> */}
+        <div>{content}</div>
     </div>
     )
     
