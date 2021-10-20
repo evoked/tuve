@@ -66,24 +66,38 @@ app.use((req, res, next) => {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   next();
 });
+	// try {
+	// 	let result = await io.in(rooms[0].id).fetchSockets()
+	// 	// io.to(rooms[0].id).emit()§
+	// } catch (error) {
+	// console.log(error)
+	// }
 
-io.on('connection', (socket) => {
-  console.log('hi')
+		// })
 
-  io.emit('blah')
-
-
-  socket.on('disconnect', () => {
-    console.log('bye')
+		socket.on('disconnect', () => {
+			
+		console.log('bye')
   })
 })
-
+  let rooms = [{id: 'aaa', users: []}, {id: 'bbb', users: []}]
 app.get('/api/test', (req,res) => {
+io.on('connection', async (socket) => {
+	console.log('connected')
+	socket.join('aaa')
+	console.log(socket.rooms)
+	try {
+		let result = await io.in(rooms[0].id).fetchSockets()
+		io.to('aaa').emit('userjoin', result)
+	} catch(err) {
+		return err
+	}
   // if(!req.headers.authorization) throw(new Error('no auth'))
     // let user = res.locals.user
     // console.log(user)
-    res.sendFile(__dirname + '/public/connect.html')
-  
+	
+  io.emit('hi')
+  // res.sendFile(__dirname + '/public/connect.html')
 })
 
 /* Login/register routing */
