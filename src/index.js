@@ -74,24 +74,32 @@ app.use((req, res, next) => {
 	// }
 
 		// })
-
-		socket.on('disconnect', () => {
-			
+io.on('connection', async (socket) => {
+  try {
+    console.log('connected')
+	  socket.join('aaa')
+    // socket.on('message', msg => {
+    //   console.log(msg)
+    //   io.to('aaa').emit('message', msg)
+    // })
+    socket.on('userMessage', msg => {
+      io.to('aaa').emit('message', msg)
+    })
+    // result = await io.in('aaa').fetchSockets()
+		// io.to('aaa').emit('event', result)
+	
+		socket.on('disconnect', (socket) => {
+			io.in('aaa').emit('event', 'disconnected')
 		console.log('bye')
   })
+  } catch (error) {
+    console.log(error)
+  }
+	
 })
   let rooms = [{id: 'aaa', users: []}, {id: 'bbb', users: []}]
 app.get('/api/test', (req,res) => {
-io.on('connection', async (socket) => {
-	console.log('connected')
-	socket.join('aaa')
-	console.log(socket.rooms)
-	try {
-		let result = await io.in(rooms[0].id).fetchSockets()
-		io.to('aaa').emit('userjoin', result)
-	} catch(err) {
-		return err
-	}
+
   // if(!req.headers.authorization) throw(new Error('no auth'))
     // let user = res.locals.user
     // console.log(user)

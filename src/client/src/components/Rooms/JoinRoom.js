@@ -19,14 +19,7 @@ import * as io from "socket.io-client"
 // const socketHelper = (c, sC) => {
     // return sC()
 // }
-
-const JoinRoom = () => {
-    const [content, setContent] = useState([])
-    const set = (data) => {
-        setContent(content => [...content, data])
-    }
-
-    const socket = io("http://localhost:3001/api/test", {
+    const socket = io("http://localhost:3001", {
     withCredentials: true,
     //   extraHeaders: {
         // "my-custom-header": "abcd"
@@ -34,22 +27,42 @@ const JoinRoom = () => {
 });
 
     socket.on('connect', (socket) => {
-        console.log(socket, 'JOINED')
+        console.log('JOINED')
         // return set('user joined')
 
     })
 
-    socket.on('userjoin', (result) => {
-        console.log('users:', result)
+    socket.on('event', (result) => {
+        console.log(result)
     })
-    // const setHelper = () => {
 
+
+const JoinRoom = () => {
+    const [content, setContent] = useState([])
+    const [message, setMessage] = useState('')
+    // const set = (data) => {
+    //     setContent(content => [...content, data])
     // }
-    
-    useEffect(() => {
+    socket.on('message', (message) => {
+        // console.log(message)
+        setContent([...content, message])
         console.log(content)
-        console.log('content change')
-    }, [content])
+    })
+
+
+    const sendMessage = (e) => {
+        e.preventDefault()
+        socket.emit('userMessage', message)
+        setMessage('')
+    }
+    const handleChange = (e) => {
+        e.preventDefault()
+        setMessage(e.target.value)
+    }
+    
+    // useEffect(() => {
+        // console.log(content)
+    // }, [content])
     // useEffect(() => {
     //     joinRoom()
     //     .then(res => {
@@ -57,8 +70,12 @@ const JoinRoom = () => {
     //             setContent(res.text)})
     //     .catch(e => console.log(e))
     // }, [])
+    
     return (
     <div>
+        <form onSubmit={sendMessage}>
+            <input type='text' value={message} onChange={handleChange} /><button>Send</button>
+        </form>
         {/* <div>{content.map(content => content[content]}</div> */}
     </div>
     )
