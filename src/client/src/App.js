@@ -17,7 +17,7 @@ class App extends React.Component {
   render() {
     return (
       <div class="min-h-screen min-w-screen">
-      <div class="bg-indigo-100 min-h-full max-h-full h-screen">
+      <div class="bg-white min-h-full max-h-full h-screen">
           <NavUser class="sticky top-5" />
           <Switch>
             <Route exact path="/" component={UserLogin}/>
