@@ -19,11 +19,6 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors())
 
-<<<<<<< HEAD
-// app.use('/gql', graphqlHTTP({
-//   schema: schema,
-//   graphiql: true
-// }))
 
 /* https://stackoverflow.com/a/38259193 */
 app.use((req, res, next) => {
@@ -33,8 +28,6 @@ app.use((req, res, next) => {
   next();
 });
 
-=======
->>>>>>> 00928195613057ab938d86d6a80278e53327fcd5
 const PORT = process.env.PORT || 3001
 const uri = `mongodb+srv://${process.env.MONGO}@merncluster.eacb3.mongodb.net/audite?retryWrites=true&w=majority`
 const options = { useNewUrlParser: true, useUnifiedTopology: true }
