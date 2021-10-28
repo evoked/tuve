@@ -19,6 +19,11 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors())
 
+// app.use('/gql', graphqlHTTP({
+//   schema: schema,
+//   graphiql: true
+// }))
+
 /* https://stackoverflow.com/a/38259193 */
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -30,7 +35,6 @@ app.use((req, res, next) => {
 const PORT = process.env.PORT || 3001
 const uri = `mongodb+srv://${process.env.MONGO}@merncluster.eacb3.mongodb.net/audite?retryWrites=true&w=majority`
 const options = { useNewUrlParser: true, useUnifiedTopology: true }
-
 
 mongoose.set("useFindAndModify", false)
 mongoose

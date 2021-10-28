@@ -76,16 +76,19 @@ const RenderUser = () => {
             {
             /* Conditional rendering, returns true once data has been received */
             loading ?  
-                <div>
+                <div id="user-public" class="mx-auto min-w-full max-w-screen-xl w-3/5 flex">
                     {/* Render public user crendentials */}
-                    <h2>{user.username}</h2>
-                    <h3>{user.created}</h3>
+                    <div id="sidebar" class="sticky flex-col content-around h-full">
+                        <h2>{user.username}</h2>
+                        <h3>{user.created}</h3>
+                        <div> blahh</div>
+                    </div>
                     <ul>
                     {
                     /* Another conditional render, checking if user has made any posts */
                     hasPosts ? 
-                        <div className="embed-container">
-                            <RenderEmbeds pageId={pageId} userPosts={user.posts} /> 
+                        <div id="embed-container" class="">
+                            <RenderEmbeds class="min-w-full w-1/2 flex-col justify-end" pageId={pageId} userPosts={user.posts} /> 
                             <div className="page-select">
                                 {/* Page increment as buttons, on user click, will redirect to respective page */}
                                 <button className="btn-page-select" onClick={() => pageIterator(pageId, 'decrement')}>Previous</button>

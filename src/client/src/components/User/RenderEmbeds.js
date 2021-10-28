@@ -29,13 +29,13 @@ class RenderEmbeds extends Component {
     /* Rendering embedded YouTube player component, along with the post details, 
         and a link to the YouTube video*/
     render() {
-        return(<div className="user-post">
+        return(<div className="">
             {this.state.renderPosts[0] ? 
             this.state.renderPosts.map((el, index) => {
-                return <li className="embed-body" key={index}>
-                    <YouTubeEmbed embedId={el.video_url} /> 
-                    <p className="embed-body-text">{el.text_body}</p>    
+                return <li class="my-3 flex-wrap" key={index}>
+                    <p class="">{el.text_body}</p>    
                     <Link to={{pathname: `https://www.youtube.com/watch?v=${el.video_url}`}} target="_blank">Watch on YouTube</Link>
+                    <YouTubeEmbed embedId={el.video_url} /> 
                     <p></p>
                 </li>
             })

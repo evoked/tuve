@@ -31,7 +31,7 @@ class UserHome extends Component {
 
     render() {
         return (
-            <div>
+            <div class="text-center">
                 <h2>Hey, {localStorage.getItem("username")}!</h2>
                 <h3>Create a post?</h3>
                 <CreatePost />
