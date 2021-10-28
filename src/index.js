@@ -19,6 +19,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors())
 
+<<<<<<< HEAD
 // app.use('/gql', graphqlHTTP({
 //   schema: schema,
 //   graphiql: true
@@ -32,6 +33,8 @@ app.use((req, res, next) => {
   next();
 });
 
+=======
+>>>>>>> 00928195613057ab938d86d6a80278e53327fcd5
 const PORT = process.env.PORT || 3001
 const uri = `mongodb+srv://${process.env.MONGO}@merncluster.eacb3.mongodb.net/audite?retryWrites=true&w=majority`
 const options = { useNewUrlParser: true, useUnifiedTopology: true }
@@ -60,26 +63,64 @@ app.use(
   })
 )
 
-const io = new Server(server)
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    transports: ['websocket', 'polling'],
+    allowedHeaders: ["Access-Control-Allow-Origin"],
+    credentials: true
+  },
+  allowEIO3: true
+})
 
-io.on('connection', (socket) => {
-  console.log('hi')
+/* https://stackoverflow.com/a/38259193 */
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS, POST, PUT");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  next();
+});
+	// try {
+	// 	let result = await io.in(rooms[0].id).fetchSockets()
+	// 	// io.to(rooms[0].id).emit()§
+	// } catch (error) {
+	// console.log(error)
+	// }
 
-  io.emit('blah')
-
-
-  socket.on('disconnect', () => {
-    console.log('bye')
+		// })
+io.on('connection', async (socket) => {
+  try {
+    console.log('connected')
+	  socket.join('aaa')
+    // socket.on('message', msg => {
+    //   console.log(msg)
+    //   io.to('aaa').emit('message', msg)
+    // })
+    socket.on('userMessage', msg => {
+      io.to('aaa').emit('message', msg)
+    })
+    // result = await io.in('aaa').fetchSockets()
+		// io.to('aaa').emit('event', result)
+	
+		socket.on('disconnect', (socket) => {
+			io.in('aaa').emit('event', 'disconnected')
+		console.log('bye')
   })
+  } catch (error) {
+    console.log(error)
+  }
+	
 })
-
-io.on('blah', () => {
-  console.log('nbllaaah')
-})
-
-
+  let rooms = [{id: 'aaa', users: []}, {id: 'bbb', users: []}]
 app.get('/api/test', (req,res) => {
-  res.sendFile('./public/connect.html', {'root': '/home/evo/programming/tuve/'})
+
+  // if(!req.headers.authorization) throw(new Error('no auth'))
+    // let user = res.locals.user
+    // console.log(user)
+	
+  io.emit('hi')
+  // res.sendFile(__dirname + '/public/connect.html')
 })
 
 /* Login/register routing */
