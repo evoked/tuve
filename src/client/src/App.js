@@ -17,8 +17,8 @@ class App extends React.Component {
   render() {
     return (
       <div class="min-h-screen min-w-screen">
-      <div class="bg-white min-h-full max-h-full h-screen">
-          <NavUser class="sticky top-5" />
+      {/* <div class="min-h-full max-h-full h-screen"> */}
+          <NavUser class="sticky top-5"/>
           <Switch>
             <Route exact path="/" component={UserLogin}/>
             <Route path="/home" component={UserHome}/>
@@ -31,7 +31,7 @@ class App extends React.Component {
             <Route path="/:username/:pageId" component={RenderUser}/>
             <Route path="*" ><p className="pageNotFound">404: not found</p></Route>
         </Switch>
-      </div>
+      {/* </div> */}
       </div>
     )
   }

@@ -46,12 +46,12 @@ class UserHome extends Component {
                         <ul>
                         {this.state.user.posts.map(post => {
                             return (
-                            <li class="flex w-2/4 m-auto max-h-48 min-h-0 bg-opacity-30 bg-white rounded-lg my-4 shadow-md p-6" key={post._id}>
+                            <li class="flex flex-row flex-wrap lg:w-1/2 m-auto md:max-h-72 lg:max-h-48 min-h-0 bg-opacity-30 bg-white rounded-lg my-4 shadow-md p-6" key={post._id}>
                                     <img class="max-h-36" src={`https://img.youtube.com/vi/${post.video_url}/0.jpg`}></img>
-                                    <div class="items-center justify-center content-center max-w-full flex-wrap">
+                                    <div class="text-center flex-wrap flex-auto overflow-ellipsis md:w-1/3 overflow-x-auto p-6 overflow-y-hidden">
                                         <Link to={{pathname: `https://youtube.com/watch?v=${post.video_url}`}} target="_blank">youtube.com/{post.video_url}</Link>
                                         <p>{post.text_body} </p>
-                                        <button class="bg-blue-200 rounded-md px-1 mx-2 py-1" onClick={e => deletePost(e, post)}>Edit</button><button class="bg-red-200 mx-2 px-1 rounded-md" onClick={e => deletePost(e, post)}>Delete</button>
+                                        <button class="bg-blue-200 rounded-md px-1 mx-2 py-1" onClick={e => console.log(e)}>Edit</button><button class="bg-red-200 mx-2 px-1 rounded-md" onClick={e => deletePost(e, post)}>Delete</button>
                                     </div>
                             </li>)
                         })}
