@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getProfile } from '../services/user'
+import { getProfile, userLogout } from '../services/user'
 import FormAction from './Buttons/FormAction'
 
 const UserProfile = () => {
@@ -32,7 +32,7 @@ const UserProfile = () => {
                 user.username ? 
                 <div> 
                     <p> {user.username} {user.created.slice(0,10)} {user.email}</p>
-                    <FormAction type='decline' label='Logout'/> 
+                    <FormAction type='decline' label='Logout' onClick={userLogout}/> 
                     <FormAction type='delete-account'>Delete Account</FormAction>
                 </div>
             : 
