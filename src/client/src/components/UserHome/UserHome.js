@@ -3,6 +3,7 @@ import CreatePost from './CreatePost';
 import { Link } from 'react-router-dom';
 import { getLocalUser } from '../../services/user';
 import FormAction from '../Buttons/FormAction';
+import { deletePost } from '../../services/post';
 
 class UserHome extends Component {
     constructor(props) {
@@ -45,11 +46,11 @@ class UserHome extends Component {
                         <ul>
                         {this.state.user.posts.map(post => {
                             return (
-                            <li className="flex flex-row flex-wrap lg:w-1/2 m-auto md:max-h-72 lg:max-h-48 min-h-0 bg-opacity-30 bg-white rounded-lg my-4 shadow-md p-6" key={post._id}>
+                            <li className="flex flex-row flex-wrap lg:w-1/2 m-auto md:max-h-72 lg:max-h-48 min-h-0 bg-white bg-opacity-10 rounded-lg my-4 shadow-md p-6" key={post._id}>
                                     <Link to={{pathname: `https://youtube.com/watch?v=${post.video_url}`}} target="_blank"><img className="max-h-36" src={`https://img.youtube.com/vi/${post.video_url}/0.jpg`} /></Link>
                                     <div className="text-center flex-wrap flex-auto overflow-ellipsis md:w-1/3 overflow-x-auto p-6 overflow-y-hidden">
                                         <p>{post.text_body} </p>
-                                        <FormAction type="accept" label="Edit"/><FormAction type="decline" label="Delete" post={post}/>
+                                        <FormAction type="accept" label="Edit" /><FormAction type="decline" label="Delete" onClick={e => deletePost(e, post)}/>
                                         {/* <button class="bg-red-200 mx-2 px-1 rounded-md" onClick={e => deletePost(e, post)}>Delete</button> */}
                                     </div>
                             </li>)

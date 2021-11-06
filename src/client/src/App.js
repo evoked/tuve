@@ -17,7 +17,7 @@ import JoinRoom from './components/Rooms/JoinRoom.js'
 class App extends React.Component {
   render() {
     return (
-      <div class="min-h-screen min-w-screen">
+      <div class="min-h-screen min-w-screen text-white">
       {/* <div class="min-h-full max-h-full h-screen"> */}
           <NavUser class="sticky top-5"/>
           <Switch>
