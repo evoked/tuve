@@ -2,6 +2,7 @@ import React from 'react'
 import {
   Switch,
   Route,
+  
 } from "react-router-dom"
 import UsersList from './components/Users.js'
 import Settings from './components/Settings.js'
@@ -21,11 +22,12 @@ class App extends React.Component {
           <NavUser class="sticky top-5"/>
           <Switch>
             <Route exact path="/" component={UserLogin}/>
-            <Route path="/home" component={UserHome}/>
+            <Route path="/profile" component={UserHome}/>
             <Route path="/settings" component={Settings} />
             <Route path="/room/join" component={JoinRoom}/>
             <Route path="/user" component={UsersList} />
-            <Route path="/users" component={UsersList} />
+            <Route path="/discover" component={UsersList} />
+            <Route path="/connect" component={UsersList} />
             <Route path="/register" component={UserRegister} />
             <Route path="/post/new" component={CreatePost} />
             <Route path="/:username/:pageId" component={RenderUser}/>

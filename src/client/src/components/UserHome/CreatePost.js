@@ -37,11 +37,11 @@ const CreatePost = () => {
     }
 
         return (
-            <div>
+            <div class="">
                 <form onSubmit={handlePostSubmission}>
-                    <input type="text" placeholder="YouTube video URL"  name="video_url" value={post.video_url} onChange={handleUserInput}></input>
-                    <input type="text" placeholder="Post body" name="post_body" value={post.text_body} onChange={handleUserInput}></input>
-                    <input type="submit" value="Create Post" />
+                    <input class="rounded-lg" type="text" placeholder="YouTube video URL"  name="video_url" value={post.video_url} onChange={handleUserInput}></input>
+                    <input class="rounded-lg" type="text" placeholder="Post body" name="post_body" value={post.text_body} onChange={handleUserInput}></input>
+                    <input class="rounded-lg" type="submit" value="Create Post" />
                 </form>
                 <p>{response}</p>
 

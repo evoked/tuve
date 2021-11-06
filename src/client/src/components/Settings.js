@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getProfile, userDelete, userLogout } from '../services/user'
+import FormAction from './Buttons/FormAction'
 
 const UserProfile = () => {
     const [response, setResponse] = useState('')
@@ -21,20 +22,19 @@ const UserProfile = () => {
         })
     }, [])
 
+    /* Logout button, calls userLogout function which clears all local and 
+        serverside information about current login */
     return(
         <div>
             <h2>Profile:</h2>
             <div className="userCard">
                 {
                 user.username ? 
-                    <p> {user.username} {user.created.slice(0,10)} {user.email}
-                    {/* Logout button, calls userLogout function which clears all local and 
-                        serverside information about current login */}
-                    <button onClick={userLogout}>Logout</button> 
-                    <button onClick={() => {
-                        userDelete()
-                        userLogout()
-                    }}>Delete Account</button></p>
+                <div> 
+                    <p> {user.username} {user.created.slice(0,10)} {user.email}</p>
+                    <FormAction type='decline' label='Logout'/> 
+                    <FormAction type='delete-account'>Delete Account</FormAction>
+                </div>
             : 
             <p>{response}</p>}</div>
         </div>
