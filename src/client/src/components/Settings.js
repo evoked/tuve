@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getProfile, userDelete, userLogout } from '../services/user'
+import { getProfile } from '../services/user'
 import FormAction from './Buttons/FormAction'
 
 const UserProfile = () => {

@@ -3,8 +3,6 @@ import CreatePost from './CreatePost';
 import { Link } from 'react-router-dom';
 import { getLocalUser } from '../../services/user';
 import FormAction from '../Buttons/FormAction';
-import { deletePost } from '../../services/post';
-
 
 class UserHome extends Component {
     constructor(props) {

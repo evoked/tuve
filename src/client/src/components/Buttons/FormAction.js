@@ -1,6 +1,5 @@
 import { deletePost } from '../../services/post';
 import { userDelete, userLogout } from '../../services/user';
-import CreatePost from '../UserHome/CreatePost';
 
 const FormType = (props) => {
     switch(props.type) {
