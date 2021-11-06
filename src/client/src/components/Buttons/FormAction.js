@@ -5,8 +5,6 @@ const FormType = (props) => {
     switch(props.type) {
         default:
             return console.error('need to pass props')
-        case('create'):
-            return <button className="bg-blue-300 rounded-md px-1 mx-2 py-1" >{props.label}</button>
         case('accept'):
             return <button className="bg-blue-300 rounded-md px-1 mx-2 py-1" >{props.label}</button>
         case('decline'):
