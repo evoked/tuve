@@ -10,6 +10,8 @@ import userController from './backend/controllers/user.controller'
 import authController from './backend/controllers/authentication.controller'
 import postController from "./backend/controllers/posts.controller"
 
+// import Room from './backend/obj/rooms'
+
 require("dotenv").config();
 
 const app = express()
@@ -80,26 +82,31 @@ app.use((req, res, next) => {
 	// } catch (error) {
 	// console.log(error)
 	// }
-
 		// })
+  
+    
 io.on('connection', async (socket) => {
-  try {
-    console.log('connected')
-	  socket.join('aaa')
+	try {
+		socket.join('aaa', () => {
+			console.log('connecting')
+		})
+		console.log(socket.rooms)
+
+	socket.in('aaa').emit('userConnectionEvent', 'user connected')
+	socket.on('userConnectionEvent', () => console.log('user connected'))
     // socket.on('message', msg => {
     //   console.log(msg)
     //   io.to('aaa').emit('message', msg)
     // })
-    socket.on('userMessage', msg => {
-      io.to('aaa').emit('message', msg)
+    socket.on('userMessage', (socket, msg) => {
+    	io.to('aaa').emit('userMessage', socket, msg)
     })
     // result = await io.in('aaa').fetchSockets()
 		// io.to('aaa').emit('event', result)
 	
-		socket.on('disconnect', (socket) => {
-			io.in('aaa').emit('event', 'disconnected')
-		console.log('bye')
-  })
+	socket.on('disconnect', (socket) => {
+		io.in('aaa').emit('userConnectionEvent', 'disconnected')
+  	})
   } catch (error) {
     console.log(error)
   }

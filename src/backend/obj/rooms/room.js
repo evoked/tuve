@@ -26,7 +26,7 @@ class Room {
     // todo
     queuePop(_id) {
         this.playedSongs.push(...this.songQueue[0])
-        this.
+        // this.
         // this.songQueue = _.remove(this.songQueue)
         console.log('queue pop')
     }
