@@ -1,74 +1,36 @@
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { joinRoom } from '../../services/rooms.js'
 import * as io from "socket.io-client"
-// import host from '../../services/host'
-
-//   auth: {
-    // token: "123"
-//   },
-//   query: {
-    // "my-key": "my-value"
-//   }
-
-
-// socket.on('userjoin', () => {
-//         console.log('AAAH')
-//     })
-
 
 const socket = io("http://localhost:3001", {
     withCredentials: true,
-    //   extraHeaders: {
-        // "my-custom-header": "abcd"
-    //   }
 });
 
 socket.on('connect', (socket) => {
     console.log('JOINED')
-    // return set('user joined')
 })
 
 socket.on('userConnectionEvent', (result) => {
     console.log('EVENT: ' + result)
 })
 
-// socket.on('userMessage', (socket, msg) => {
-//     console.log(socket, msg)
-// // })
-// socket.on('userMessage', (socket, message) => {
-//     // console.log(message)
-//     // setContent(message)
-//     console.log(socket, message)
-// })
-const JoinRoom = () => {
-    const [content, setContent] = useState({})
-    const [message, setMessage] = useState('')
-    // const set = (data) => {
-    //     setContent(content => [...content, data])
-    // }
 
-    // socket.on('userConnect', () => {
-    //     console.log('user has connected')
-    // })
+const JoinRoom = () => {
+    const [content, setContent] = useState([])
+    const [message, setMessage] = useState('')
+
     useEffect(() => {
         socket.on('userMessage', (socket, message) => {
-            console.log(socket, message)
-            addMessage(message)
+            // addMessage(socket.id, message)
+            // setSentMessage(socket.id, message)
+            setContent(content => [...content, {user: socket.id, message: message}])
         })
 
         return() => {
-            socket.emit('disconnect')
+            socket.emit('disconnect', socket)
         }
     }, [])
-    
-    const addMessage = (msg) => {
-        setContent({message: msg})
-        console.log(content)
-    }
-    // const addMessage = (msg) => {
-    //     setContent({message: msg})
-    //     console.log(content)
-    // }
+
 
     const sendMessage = (e) => {
         e.preventDefault()
@@ -81,23 +43,23 @@ const JoinRoom = () => {
         setMessage(e.target.value)
     }
 
-    // useEffect(() => {
-        // console.log(content)
-    // }, [content])
-    // useEffect(() => {
-    //     joinRoom()
-    //     .then(res => {
-    //             console.log(res)   
-    //             setContent(res.text)})
-    //     .catch(e => console.log(e))
-    // }, [])
-    
     return (
-    <div>
+    <div className="m-3">
         <form onSubmit={sendMessage}>
-            <input className='text-black' type='text' value={message} onChange={handleChange} onSubmit={sendMessage} /><button>Send</button>
+            <input className='text-black' placeholder='send a message' type='text' value={message} onChange={handleChange} onSubmit={sendMessage} /><button>Send</button>
         </form>
-        {/* <div>{content.map(content => content[content]}</div> */}
+        <div className="overflow-y-scroll overflow-x-hidden">
+            <ul className="min-h-max max-h-96 flex flex-col my-2 max-w-screen-md">
+                {content.map(message => {
+                    return(
+                        <li className="my-1 overflow-x-hidden ">
+                            <p className="bg-gray-300 bg-opacity-25 max-w-min rounded-md">user</p>
+                            <p>{message.message}</p>
+                        </li>
+                    )
+                })}
+            </ul>
+        </div>
     </div>
     )
     
