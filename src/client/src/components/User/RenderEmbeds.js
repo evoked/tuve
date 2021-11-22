@@ -33,9 +33,11 @@ class RenderEmbeds extends Component {
             {this.state.renderPosts[0] ? 
             this.state.renderPosts.map((el, index) => {
                 return <li class="my-3 flex-wrap" key={index}>
+                    {console.log(el)}
                     <p class="">{el.text_body}</p>    
                     <Link to={{pathname: `https://www.youtube.com/watch?v=${el.video_url}`}} target="_blank">Watch on YouTube</Link>
                     <YouTubeEmbed embedId={el.video_url} /> 
+                    <button onClick={() => navigator.clipboard.writeText(`http://localhost:3000/${el._id}`)}>Share post</button>
                     <p></p>
                 </li>
             })
